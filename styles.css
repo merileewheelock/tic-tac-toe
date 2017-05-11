@@ -1,6 +1,25 @@
+*{
+	font-family: 'Architects Daughter', cursive;
+}
+
+body{
+	background: url("http://images.stockunlimited.net/preview1300/tic-tac-toe-pattern-background_1242337.jpg");
+}
+
+.container{
+	border: 2px solid #141237;
+	border: 10px solid #141237;
+	background-color: white;
+	margin-top: 20px;
+}
+
 h1{
-	color: blue;
+	color: #DE126F;
 	font-size:  60px;
+}
+
+.user-response{
+	margin-bottom: 10px;
 }
 
 #board{
@@ -8,18 +27,29 @@ h1{
 	min-width: 320px;
 	float: none;
 	margin: auto;
+	padding-bottom: 30px;
 }
 
 .square{
-	background-color: white;
-	border: 2px solid black;
+	background-color: #f9eed6;
+	border: 2px solid #141237;
 	outline: none; /* Gets rid of Chrome blue outine on click */
 	width: 30%;
 	padding: 30px 0;
 	font-size: 80px;
-	margin: -3px;
+	margin: -4px;
+	height: 180px;
 }
 
 .square:hover{
-	background-color: yellow;
+	background-color: #efc364;
+}
+
+.winning-square{
+	background-color: #DE126F !important;
+	color: white !important;
+}
+
+.winning-square.reset-clear{
+	background-color: #f9eed6;
 }
