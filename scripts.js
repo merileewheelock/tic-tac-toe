@@ -31,13 +31,20 @@ var winningCombos = [
 var gameDone = false;
 var onePlayerGame = true;
 
+var player1Wins = 0;
+var player2Wins = 0;
+
+var numberOfPlayersMessageElement = document.getElementById("numberOfPlayers");
+
 function vsComputer(){
 	onePlayerGame = true;
+	numberOfPlayersMessageElement.innerHTML = "Player 1 vs Computer";
 	console.log("One player");
 }
 
 function twoPlayer(){
 	onePlayerGame = false;
+	numberOfPlayersMessageElement.innerHTML = "Player 1 vs Player 2";
 	console.log("Two players");
 }
 
@@ -155,3 +162,5 @@ function reset(){
 	completedSquares = [];
 	whoseTurn = 1;
 }
+
+
