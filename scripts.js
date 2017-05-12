@@ -10,13 +10,14 @@
 
 // Initialize whoseTurn at player 1 (or X)
 
-squareOptions = ["A1", "B1", "C1", "A2", "B2", "C2", "A3", "B3", "C3"];
-randomSquare = Math.floor(Math.random() * 8);
+// squareOptions = ["A1", "B1", "C1", "A2", "B2", "C2", "A3", "B3", "C3"];
+// randomSquare = Math.floor(Math.random() * 8);
 // console.log(randomSquare);
 
 var whoseTurn = 1;
 var player1Squares = [];
 var player2Squares = [];
+var completedSquares = [];
 var winningCombos = [
 	["A1", "B1", "C1"], // Row1
 	["A2", "B2", "C2"], // Row2
@@ -56,20 +57,23 @@ var squares = document.getElementsByClassName("square");
 
 function markSquare(currentSquare){
 	// console.log(currentSquare.id);
-	// squareResult = ""
+	squareResult = ""
+	var messageElement = document.getElementById("message");
+	messageElement.innerHTML = squareResult;
 	if ((currentSquare.innerHTML == "X") || (currentSquare.innerHTML == "O")){
 		// console.log("This square is taken");
 		squareResult = "Sorry, this square is taken.";
-	}else if(gameDone){
+	}else if(gameDone == true){
 		squareResult = "Someone has already won the game!";
 	}else if (whoseTurn == 1){
 		currentSquare.innerHTML = "X";
 		whoseTurn = 2;
 		squareResult = ""
 		player1Squares.push(currentSquare.id);
+		completedSquares.push(currentSquare.id);
 		checkWin(player1Squares,1);
 		if(onePlayerGame){
-			computerMove();
+			computerMove(currentSquare);
 		}
 	}else{
 		currentSquare.innerHTML = "O";
@@ -80,27 +84,28 @@ function markSquare(currentSquare){
 	}
 	// console.log(player1Squares);
 	// console.log(player2Squares);
-	var messageElement = document.getElementById("message");
-	messageElement.innerHTML = squareResult;
 }
 
-compMoves = [];
-function computerMove(){
+function computerMove(currentSquare){
 	squareFound = false;
 	// find a random square - call markSquare
 	// see if that square is empty
 	// if it is, send it to that square
 	// if it's not, keep looking (while loop)
+	rand = Math.floor(Math.random() * 9);
 	while (squareFound == false) {
-		rand = Math.floor(Math.random() * 8);
+		rand = Math.floor(Math.random() * 9);
 		if ((squares[rand].innerHTML != "X") && (squares[rand].innerHTML != "O")) {
 			squareFound = true;
 			markSquare(squares[rand]);
-			compMoves.push(squares[rand]);
-			console.log(compMoves);
+			player2Squares.push(squares[rand]);
+			completedSquares.push(currentSquare.id);
+		}else if (completedSquares.length == squares.length){
+			break;
 		}
 	}
 }
+
 
 function checkWin(currentPlayersSquares, whoJustWent){
 	// Outter Loop (winning combos)
@@ -111,24 +116,24 @@ function checkWin(currentPlayersSquares, whoJustWent){
 			var winningSquare = winningCombos[i][j];
 			// Does the player have this square?
 			if(currentPlayersSquares.indexOf(winningSquare) > -1){
-				// The index is > -1, wich means the player has this square.
+				// The index is > -1, which means the player has this square.
 				// We don't care when it happened, we just care that it happened.
 				squareCount++;
 			}
 		}
 		// If square count is 3 ,then the user had all 3 j's in this i
 		if (squareCount == 3){
-			console.log("Player " + whoJustWent + " won the game!");
+			// console.log("Player " + whoJustWent + " won the game!");
 			// Stop checking i's, the game is over
 			gameOver(whoJustWent, winningCombos[i]);
-			break;
+			// break;
 		}
 	}
 }
 
 function gameOver(whoJustWon,winningCombo){
-	var message = "Congratulations to player " + whoJustWon + ". You won with " + winningCombo;
-	document.getElementById("message").innerHTML = message;
+	var endMessage = "Congratulations to player " + whoJustWon; + "! You win!" //" You won with " + winningCombo;
+	document.getElementById("message").innerHTML = endMessage;
 	for (let i = 0; i < winningCombo.length; i++){
 		document.getElementById(winningCombo[i]).className += " winning-square"; // Need space due to concatenating
 	}
@@ -138,11 +143,15 @@ function gameOver(whoJustWon,winningCombo){
 
 function reset(){
 	var squares = document.getElementsByClassName("square");
-	console.log(squares);
+	// console.log(squares);
 	for (let i = 0; i < squares.length; i++){
 		squares[i].innerHTML = "&nbsp;";
 		squares[i].className = "square";
 	}
-	squareCount = 0;
+	// squareCount = 0;
 	gameDone = false;
+	player1Squares = [];
+	player2Squares = [];
+	completedSquares = [];
+	whoseTurn = 1;
 }
