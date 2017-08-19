@@ -26,6 +26,8 @@ h1{
 #board{
 	max-width: 640px;
 	min-width: 320px;
+	max-height: 640px;
+	min-height: 320px;
 	float: none;
 	margin: auto;
 	padding-bottom: 30px;
