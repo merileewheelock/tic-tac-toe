@@ -75,7 +75,7 @@ function markSquare(currentSquare){
 	}else if (whoseTurn == 1){
 		currentSquare.innerHTML = "X";
 		whoseTurn = 2;
-		squareResult = ""
+		squareResult = "";
 		player1Squares.push(currentSquare.id);
 		completedSquares.push(currentSquare.id);
 		checkWin(player1Squares,1);
@@ -85,7 +85,7 @@ function markSquare(currentSquare){
 	}else{
 		currentSquare.innerHTML = "O";
 		whoseTurn = 1;
-		squareResult = ""
+		squareResult = "";
 		player2Squares.push(currentSquare.id);
 		checkWin(player2Squares,2);
 	}
